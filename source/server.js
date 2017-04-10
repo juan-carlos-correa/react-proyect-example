@@ -4,9 +4,11 @@
 import http from 'http'
 import React from 'react'
 // React-dom tiene metodos para usar react en el servidor. Renderiza la aplicacion a un string en htlm
-import { renderToString } from 'react-dom/server'
+import { renderToString, renderToStaticMarkup } from 'react-dom/server'
 import { StaticRouter } from 'react-router-dom'
 import Pages from './pages/containers/Pages.jsx'
+
+import Layout from './pages/components/Layout.jsx'
 
 function requestHandler(req, res) {
   const context = {};
@@ -24,7 +26,14 @@ function requestHandler(req, res) {
   	});
   	res.end();
   }
-  res.write(html)
+  res.write(
+    renderToStaticMarkup(
+      <Layout
+        title="Aplication"
+        content={html}
+      />
+    )
+  )
   res.end()
   console.log('Server in port 3000')
 
