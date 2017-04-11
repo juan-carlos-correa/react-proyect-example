@@ -29,6 +29,5 @@ module.exports = {
       }
     ]
   },
-  // target de compilacion es node para usar sus modulos nativos
-  target: 'node',
+  target: 'web',
 }
