@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
+import Loading from '../../shared/components/Loading.jsx'
 
 // Componente para posts
 import Post from '../../posts/containers/Post.jsx'
@@ -33,15 +34,12 @@ class Home extends Component {
         <h1>Home</h1>
         <section>
           {this.state.loading && (
-            <h2>Loading posts... </h2>
+            <Loading />
           )}
           {this.state.posts
             .map(post => <Post key={post.id} {...post} />)
           }
         </section>
-        <Link to="/post/:id">
-          Go to about
-        </Link>
       </section>
     )
   }
