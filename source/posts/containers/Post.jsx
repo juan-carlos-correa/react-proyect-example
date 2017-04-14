@@ -1,4 +1,7 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
+import PropTypes from 'prop-types';
+
 import api from '../../api.js'
 
 class Post extends Component {
@@ -37,9 +40,9 @@ class Post extends Component {
         </p>
         {!this.state.loading && (
           <div>
-            <a href={`//${this.state.user.website} target="_blankl" rel="nofollow"`}>
+            <Link to={`/user/${this.state.user.id}`}>
               {this.state.user.name}
-            </a>
+            </Link>
             <span>
               Hay {this.state.comments.length} comentarios
             </span>
@@ -50,7 +53,7 @@ class Post extends Component {
   }
 }
 
-Post.PropTypes = {
+Post.propTypes  = {
   id: PropTypes.number,
   userId: PropTypes.number,
   title: PropTypes.string,
