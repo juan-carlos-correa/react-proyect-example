@@ -9971,7 +9971,7 @@ class Post extends _react.Component {
 
     this.state = {
       loading: true,
-      user: {},
+      user: props.user || null,
       coments: []
     };
   }
@@ -9980,11 +9980,11 @@ class Post extends _react.Component {
     var _this = this;
 
     return _asyncToGenerator(function* () {
-      const [user, comments] = yield Promise.all([_api2.default.users.getSingle(_this.props.userId), _api2.default.posts.getComments(_this.props.id)]);
+      const [user, comments] = yield Promise.all([!_this.state.user ? _api2.default.users.getSingle(_this.props.userId) : Promise.resolve(null), _api2.default.posts.getComments(_this.props.id)]);
 
       _this.setState({
         loading: false,
-        user,
+        user: user || _this.state.user,
         comments
       });
     })();
@@ -14840,7 +14840,11 @@ class Profile extends _react.Component {
     return _asyncToGenerator(function* () {
       const [user, posts] = yield Promise.all([_api2.default.users.getSingle(_this.props.match.params.id), _api2.default.users.getPosts(_this.props.match.params.id)]);
 
-      _this.setState([user, posts, loading]);
+      _this.setState({
+        user: user,
+        posts: posts,
+        loading: false
+      });
     })();
   }
 

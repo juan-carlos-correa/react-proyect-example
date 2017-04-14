@@ -23,11 +23,11 @@ class Profile extends Component {
       api.users.getPosts(this.props.match.params.id),
     ]);
 
-    this.setState([
+    this.setState({
       user:user,
       posts: posts,
       loading: false,
-    ]);
+    });
 
   }
 

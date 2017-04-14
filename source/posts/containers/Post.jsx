@@ -10,7 +10,7 @@ class Post extends Component {
 
     this.state = {
       loading: true,
-      user: {},
+      user: props.user || null,
       coments: [],
     }
   }
@@ -20,13 +20,13 @@ class Post extends Component {
       user,
       comments,
     ] = await Promise.all([
-      api.users.getSingle(this.props.userId),
+      !this.state.user ? api.users.getSingle(this.props.userId) : Promise.resolve(null),
       api.posts.getComments(this.props.id),
     ])
 
     this.setState({
       loading: false,
-      user,
+      user: user || this.state.user,
       comments,
     })
   }
