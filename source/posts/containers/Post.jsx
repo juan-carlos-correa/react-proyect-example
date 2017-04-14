@@ -11,30 +11,33 @@ class Post extends Component {
     this.state = {
       loading: true,
       user: props.user || null,
-      coments: [],
+      coments: props.comments || null,
     }
   }
 
   async componentDidMount() {
+    if (!!this.state.user && !!this.state.comments) return this.setState({ loading: false})
     const [
       user,
       comments,
     ] = await Promise.all([
       !this.state.user ? api.users.getSingle(this.props.userId) : Promise.resolve(null),
-      api.posts.getComments(this.props.id),
+      !this.state.comments ? api.posts.getComments(this.props.id) : Promise.resolve(null),
     ])
 
     this.setState({
       loading: false,
       user: user || this.state.user,
-      comments,
+      comments: comments || this.state.comments,
     })
   }
 
   render() {
     return (
-      <article>
-        <h2>{this.props.title}</h2>
+      <article id={`post-${this.props.id}`}>
+        <Link to={`/post/${this.props.id}`}>
+          <h2>{this.props.title}</h2>
+        </Link>
         <p>
           {this.props.body}
         </p>
