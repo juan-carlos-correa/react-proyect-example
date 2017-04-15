@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
+
 import Loading from '../../shared/components/Loading.jsx'
+import Header from '../../shared/components/Header.jsx'
+import styles from './Page.css'
 
 // Componente para posts
 import Post from '../../posts/containers/Post.jsx'
@@ -66,9 +69,10 @@ class Home extends Component {
 
   render() {
     return (
-      <section name="Home">
+      <section name="Home" className={styles.section}>
+      <Header />
         <h1>Home</h1>
-        <section>
+        <section className={styles.list}>
           {this.state.loading && (
             <Loading />
           )}

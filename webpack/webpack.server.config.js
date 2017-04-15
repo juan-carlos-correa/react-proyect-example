@@ -1,4 +1,6 @@
 const path = require('path')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
+
 
 module.exports = {
   // Punto de entrada de webpack. Primer archivo que leera
@@ -25,9 +27,20 @@ module.exports = {
           // preset en babel son conjuntos de plugins. Consultar doc: https://babeljs.io/docs/plugins/
           presets: ['latest-minimal', 'react']
         }
-      }
+      },
+      {
+        test: /\.css$/,
+        exclude: /node_modules/,
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: 'css-loader?modules',
+        })
+      },
     ]
   },
   // target de compilacion es node para usar sus modulos nativos
   target: 'node',
+  plugins: [
+    new ExtractTextPlugin('../statics/styles.css')
+  ],
 }

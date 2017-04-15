@@ -1,4 +1,5 @@
 const path = require('path')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 module.exports = {
   // Punto de entrada de webpack. Primer archivo que leera
@@ -26,8 +27,21 @@ module.exports = {
           presets: ['es2016', 'es2017', 'react'],
           plugins: ['transform-es2015-modules-commonjs']
         }
-      }
+      },
+      {
+        test: /\.css$/,
+        exclude: /node_modules/,
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: 'css-loader?modules',
+        })
+      },
     ]
   },
   target: 'web',
+  plugins: [
+    new ExtractTextPlugin({
+      filename: '../statics/styles.css',
+    })
+  ],
 }
